@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -56,12 +57,12 @@ namespace XmlUtil
         {
             var element = new XElement(typeof(T).Name);
             var properties = type.GetProperties();
-
             foreach (var propertyInfo in properties)
             {
+                if(propertyInfo.PropertyType.GetInterface("ICollection", false) != null)
+                    throw new Exception("暂不支持直接存储集合");
                 element.SetAttributeValue(propertyInfo.Name, propertyInfo.GetValue(obj, null));
             }
-
             root.Add(element);
         }
 

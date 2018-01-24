@@ -11,7 +11,7 @@ namespace XmlUtil
     {
         static void Main(string[] args)
         {
-            var path = new XmlHelper<MyClass>("E://1.xml");
+            var path = new XmlHelper<MyClass>("1.xml");
             var list = new List<MyClass>()
             {
                 new MyClass {name = "2r23"},
@@ -20,22 +20,24 @@ namespace XmlUtil
                 new MyClass {name = "fghgt23"},
                 new MyClass {name = "oli67"},
             };
-            //  path.Add(new MyClass(){name = "123"});
-            // path.AddRange(list);
+           //  path.Add(new MyClass() {name = "123",classList = new List<MyClass>()});
+            path.AddRange(list);
             //path.Finds();
-            Func<MyClass, bool> tmep = m => m.name.Equals("2r23");
-           // path.Remove(tmep);
+
             Console.WriteLine("Hello World!");
         }
     }
 
-  
 
     class MyClass : IXmlEntity
     {
         public string name { get; set; }
         public int age { get; set; }
+        public Email AddreEmail { get; set; }=new Email();
     }
 
-  
+    class Email : IXmlEntity
+    {
+        public string address { get; set; } = "15613";
+    }
 }
