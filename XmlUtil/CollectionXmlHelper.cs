@@ -19,15 +19,14 @@ namespace XmlUtil
         public XmlHelper(string path)
         {
             _path = path;
-        }
-
-        public void Add(T obj)
-        {
             if (!File.Exists(_path))
             {
                 CreateXmlFile();
             }
+        }
 
+        public void Add(T obj)
+        {
             var doc = XDocument.Load(_path);
             var root = doc.Root;
             var type = typeof(T);
@@ -35,13 +34,8 @@ namespace XmlUtil
             doc.Save(_path);
         }
 
-        public void AddRange(ICollection<T> objs)
+        public void AddRange(IEnumerable<T> objs)
         {
-            if (!File.Exists(_path))
-            {
-                CreateXmlFile();
-            }
-
             var doc = XDocument.Load(_path);
             var root = doc.Root;
             var type = typeof(T);
@@ -63,6 +57,7 @@ namespace XmlUtil
                     throw new Exception("暂不支持直接存储集合");
                 element.SetAttributeValue(propertyInfo.Name, propertyInfo.GetValue(obj, null));
             }
+            
             root.Add(element);
         }
 
@@ -75,7 +70,7 @@ namespace XmlUtil
             xdoc.Save(_path);
         }
 
-        public ICollection<T> Finds()
+        public IEnumerable<T> Finds()
         {
             var doc = XDocument.Load(_path);
             var root = doc.Root;
